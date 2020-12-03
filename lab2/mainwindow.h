@@ -1,12 +1,18 @@
-#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtXML>
 #include <QFileDialog>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 #include <QXmlStreamAttribute>
-#include <QFile>
+#include <QListWidgetItem>
+#include <QMessageBox>
+
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
@@ -16,6 +22,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void writeToXML();
+    void parsingXML();
+
+private:
+    Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
+

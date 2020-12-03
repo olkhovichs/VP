@@ -5,27 +5,46 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {}
 
-void MainWindow::writeToXML() {
-    QFile* file = new QFile("config.xml");
-        /*if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            emit Log(tr("Error of opening config"), LOG_LEVEL_ERROR);
-            return false;
-        }*/
-     QXmlStreamReader xml(file);
+void MainWindow::parsingXML() {
+    auto xmlFile = new QFile("config.xml");
+            if (!xmlFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
+                    QMessageBox::critical(this,"Load XML File Problem",
+                    "Couldn't open xmlfile.xml to load settings for download",
+                    QMessageBox::Ok);
+                    return;
+            }
+    auto xmlReader = new QXmlStreamReader(xmlFile);
 
-     while (!xml.atEnd() && !xml.hasError())
-         {
-             QXmlStreamReader::TokenType token = xml.readNext();
-             if (token == QXmlStreamReader::StartDocument)
-                 continue;
-             if (token == QXmlStreamReader::StartElement)
-             {
-                 if (xml.name() == "etaps")
-                     continue;
-                 if (xml.name() == "etap")
-                     XMLConf.append(parseEtap(xml));
-             }
-         }
+
+    //Parse the XML until we reach end of it
+    while(!xmlReader->atEnd() && !xmlReader->hasError()) {
+            // Read next element
+            QXmlStreamReader::TokenType token = xmlReader->readNext();
+            //If token is just StartDocument - go to next
+            if(token == QXmlStreamReader::StartDocument) {
+                    continue;
+            }
+            //If token is StartElement - read it
+            if(token == QXmlStreamReader::StartElement) {
+
+                    if(xmlReader->name() == "name") {
+                            continue;
+                    }
+
+                    if(xmlReader->name() == "id") {
+                        qDebug() << xmlReader->readElementText();
+                    }
+            }
+    }
+
+    if(xmlReader->hasError()) {
+            QMessageBox::critical(this,
+            "xmlFile.xml Parse Error",xmlReader->errorString(),
+            QMessageBox::Ok);
+            return;
+    }
+
+    //close reader and flush file
+    xmlReader->clear();
+    xmlFile->close();
 }
-
