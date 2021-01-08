@@ -50,7 +50,7 @@ private:
     QHBoxLayout* hBoxButtons = new QHBoxLayout;
     QVBoxLayout* vBoxRight = new QVBoxLayout;
 
-    QPushButton* replay = new QPushButton(trUtf8("ΐοπ"), this);
+    QPushButton* replay = new QPushButton(trUtf8("Γ€Γ―Γ°"), this);
     QPushButton* deleteMail = new QPushButton("Delete", this);
     QPushButton* spam = new QPushButton("Spam", this);
 };
