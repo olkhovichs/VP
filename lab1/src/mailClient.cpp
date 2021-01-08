@@ -11,7 +11,7 @@ mailClient::mailClient(QWidget *parent)
     ui.setupUi(this);
 
     resize(windowWidth, windowHeight);
-    setWindowTitle("Ïî÷ò");
+    setWindowTitle("ÃÃ®Ã·Ã²");
     setWindowIcon(QIcon("windowIcon.png"));
     this->setCentralWidget(centralWidget);
     
